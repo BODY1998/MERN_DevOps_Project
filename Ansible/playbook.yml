@@ -1,0 +1,11 @@
+- name: Set up Jenkins on EC2
+  hosts: jenkins
+  become: true
+  roles:
+    - jenkins
+
+- name: Set up CloudWatch Agent on EC2
+  hosts: cloudwatch
+  become: true
+  roles:
+    - cloudwatch

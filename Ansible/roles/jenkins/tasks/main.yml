@@ -1,0 +1,42 @@
+# Install Jenkins dependencies
+- name: Install dependencies
+  apt:
+    name:
+      - openjdk-11-jre
+      - wget
+    state: present
+
+# Add Jenkins repository and install
+- name: Add Jenkins repository
+  apt_repository:
+    repo: 'deb http://pkg.jenkins.io/debian/ stable main'
+    state: present
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+
+# Ensure Jenkins is started and enabled
+- name: Ensure Jenkins is running
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+
+# Install Jenkins plugins
+- name: Install Jenkins plugins
+  jenkins_plugin:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - docker-workflow
+    - pipeline-utility-steps
+    - blueocean
+
+# Ensure Jenkins is running after plugin installation
+- name: Restart Jenkins
+  service:
+    name: jenkins
+    state: restarted

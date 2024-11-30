@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: NTI
+  labels:
+    app: NTI
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: NTI
+  template:
+    metadata:
+      labels:
+        app: NTI
+    spec:
+      containers:
+      - name: NTI-container
+        image: 529088271294.dkr.ecr.us-east-1.amazonaws.com/NTI-repo:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: REACT_APP_API_URL
+          value: "http://localhost:3001/api"
+      imagePullSecrets:
+      - name: ecr-secret  
