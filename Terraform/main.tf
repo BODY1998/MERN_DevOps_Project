@@ -19,15 +19,6 @@ module "eks" {
   instance_types  = var.instance_types
 }
 
-module "rds" {
-  source = "./modules/rds"
-  db_name              = var.db_name
-  vpc_id               = module.networking.vpc_id
-  db_username          = var.db_username
-  db_password          = var.db_password
-  private_subnets      = module.networking.private_subnets 
-}
-
 module "jenkins" {
   source = "./modules/jenkins"
 
